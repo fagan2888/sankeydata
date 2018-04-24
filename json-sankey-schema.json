@@ -1,0 +1,150 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "description": "floWeaver Sankey Data v0 JSON schema.",
+  "type": "object",
+  "required": ["metadata", "format", "nodes", "links"],
+  "properties": {
+    "metadata": {
+      "description": "Metadata describing the whole Sankey diagram.",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "title": {
+          "description": "The title of the Sankey diagram",
+          "type": "string"
+        },
+        "authors": {
+          "description": "The author(s) of the Sankey diagram",
+          "type": "array",
+          "item": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "format": {
+      "description": "Sankey Data format",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "major": {
+          "description": "Major version number. Incremented between backwards incompatible changes to the format.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 0
+        },
+        "minor": {
+          "description": "Minor version number. Incremented between backwards compatible changes to the format.",
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "nodes": {
+      "description": "Array of nodes in the Sankey diagram",
+      "type": "array",
+      "items": {"$ref": "#/definitions/node"}
+    },
+    "links": {
+      "description": "Array of links in the Sankey diagram",
+      "type": "array",
+      "items": {"$ref": "#/definitions/link"}
+    }
+  },
+
+  "definitions": {
+    "node": {
+      "description": "A Sankey diagram node.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "style", "metadata"],
+      "properties": {
+        "id": {
+          "description": "Unique node id.",
+          "type": "string",
+          "pattern": "^.+$"
+        },
+        "title": {
+          "description": "Title (label) of the node.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["label"],
+          "properties": {
+            "label": {
+              "description": "Label of the node.",
+              "type": "string"
+            },
+            "x": {
+              "description": "x position of the title, relative to node origin.",
+              "type": "number"
+            },
+            "y": {
+              "description": "y position of the title, relative to node origin.",
+              "type": "number"
+            },
+            "halign": {
+              "description": "Horizontal alignment of title.",
+              "enum": ["left", "center", "right"]
+            },
+            "valign": {
+              "description": "Vertical alignment of title.",
+              "enum": ["top", "middle", "bottom"]
+            }
+          }
+        },
+        "geometry": {
+          "description": "Optional layout/geometry properties. If not specified, they should be calculated automatically for visualisation",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["x", "y", "w", "h"],
+          "properties": {
+            "x": {
+              "description": "x position of the node origin.",
+              "type": "number"
+            },
+            "y": {
+              "description": "y position of the node origin.",
+              "type": "number"
+            },
+            "w": {
+              "description": "Width of the node.",
+              "type": "number"
+            },
+            "h": {
+              "description": "Height of the node.",
+              "type": "number"
+            },
+            "anchor_link": {
+              "description": "Optional: index of link in links array to anchor node origin to.",
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "style": {
+          "description": "Visual styling properties.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "hidden": {
+              "description": "Is the node hidden?",
+              "type": "bool",
+              "default": "false"
+            }
+          }
+        },
+        "metadata": {
+          "description": "Optional additional metadata.",
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}
