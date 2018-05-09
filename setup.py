@@ -24,7 +24,7 @@ def find_version(*file_paths):
 
 
 # Get the long description from the README file
-with codecs.open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+with codecs.open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 
@@ -33,6 +33,7 @@ setup(
     version=find_version('src', 'sankeydata', '__init__.py'),
     description="Data structure for Sankey diagrams.",
     long_description=long_description,
+    long_description_content_type='text/markdown',
     url='https://github.com/ricklupton/sankeydata',
     author='Rick Lupton',
     author_email='mail@ricklupton.name',
