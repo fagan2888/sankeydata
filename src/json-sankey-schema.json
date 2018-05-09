@@ -63,12 +63,11 @@
       "description": "A Sankey diagram node.",
       "type": "object",
       "additionalProperties": false,
-      "required": ["id", "title", "style", "metadata"],
+      "required": ["id", "title", "style"],
       "properties": {
         "id": {
           "description": "Unique node id.",
-          "type": "string",
-          "pattern": "^.+$"
+          "$ref": "#/definitions/id"
         },
         "title": {
           "description": "Title (label) of the node.",
@@ -134,7 +133,7 @@
           "properties": {
             "hidden": {
               "description": "Is the node hidden?",
-              "type": "bool",
+              "type": "boolean",
               "default": "false"
             }
           }
@@ -145,6 +144,52 @@
           "additionalProperties": true
         }
       }
+    },
+    "link": {
+      "description": "A Sankey diagram link.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "target", "type", "data"],
+      "properties": {
+        "source": {
+          "description": "The node id of the source of the link.",
+          "$ref": "#/definitions/id"
+        },
+        "target": {
+          "description": "The node id of the target of the link.",
+          "$ref": "#/definitions/id"
+        },
+        "type": {
+          "description": "The type of the link. (source, target, type) triples should be unique.",
+          "type": "string"
+        },
+        "data": {
+          "description": "Data values associated with the link.",
+          "type": "object",
+          "additionalProperties": true
+        },
+        "style": {
+          "description": "Visual styling properties.",
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "fill": {
+              "description": "Link fill color.",
+              "type": "string"
+            },
+            "opacity": {
+              "description": "Link fill opacity, between 0 and 1.",
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      }
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^.+$"
     }
   }
 }
